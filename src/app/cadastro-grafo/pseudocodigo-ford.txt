@@ -1,0 +1,26 @@
+6) Verificar se o caminho chega até o destino
+    a)se o arco maior que zero é um caminho valido
+    b)Se chega até o destino 
+        c) salvar todos vertices num array
+        d) salvar o indice do arco que faz o caminho
+        e) criar um objeto para salvar o array e o indice do arco <<caminho>>
+
+7) Achar o valor do menor arco
+    a)Salvar na variavel <<menorValor>>
+
+8) Subtrair de todos arcos o menorValor
+    a)verificando o rotulo de cada vertice e o indice do arco que estão no  objeto <<caminho>> e alterando seus correspondentes no vetor
+
+9) Verificar se existi um arco no caminho inverso
+    a)utilizando o objeto caminho e comparando com o vetor original
+
+10)Se existir um arco no caminho inverso deve somar com a variavel menorValor,
+    Se não existir deve criar um arco inverso
+
+11) Deve colocar a variavel menorValor no no array solucao
+
+12)Voltar a etapa 6
+
+13)Se não existir outro caminho o algoritmo deve parar
+
+14) Deve somar o array solucação e gerar o resultado

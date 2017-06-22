@@ -1,0 +1,98 @@
+<div class="container-fluid ">
+    <div class="row ">
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="card-title">
+                                <div class="breadcrumb text-black">
+                                    <h2 class="h3">Grafo</h2>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="vertice-inicial">Vertice Inicial</label>
+                                <input [(ngModel)]="verticeInicial" name="vertice-rotulo" type="text" class="form-control" id="vertice-inicial" placeholder="Nome Vertice">
+                            </div>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button (click)="resetarGrafo()" type="button" class="btn btn-secondary">Criar</button>
+                                <button (click)="Imprimir()" type="button" class="btn btn-secondary">Imprimir </button>
+                                <button (click)="prim()" type="button" class="btn btn-secondary">Prim </button>
+                                <button (click)="kruskal()" type="button" class="btn btn-secondary">Kruskal </button>
+                                <button (click)="fordFulkerson()" type="button" class="btn btn-secondary">Ford </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================ VERTICE ========================== -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="card-title">
+                                <div class="breadcrumb text-black">
+                                    <h2 class="h3">Vertice</h2>
+                                </div>
+                            </div>
+                            <form action="">
+                                <div class="form-group">
+                                    <label for="vertice-origem">Vertice</label>
+                                    <input [(ngModel)]="vertice.rotulo" name="vertice-rotulo" type="text" class="form-control" id="vertice-origem" placeholder="Nome Vertice">
+                                </div>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button (click)="adicionarVertice()" type="submit" class="btn btn-secondary">Adicionar</button>
+                                    <button type="submit" class="btn btn-secondary">Excluir</button>
+                                    <button (click)="verificarVertice(vertice.rotulo) == true" type="submit" class="btn btn-secondary">Verificar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================ ARESTA ========================== -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="card-title">
+                                <div class="breadcrumb text-black">
+                                    <h2 class="h3">Aresta</h2>
+                                </div>
+                            </div>
+                            <form action="">
+                                <div class="form-group">
+                                    <label for="grafo-origem">Vertice Origem</label>
+                                    <input [(ngModel)]="verticeOrigemRotulo" name="vertice-origem" type="text" class="form-control" id="grafo-origem" placeholder="Nome Vertice Origem">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="grafo-destino">Vertice Destino</label>
+                                    <input [(ngModel)]="verticeDestinoRotulo" name="vertice-destino" type="text" class="form-control" id="grafo-destino" placeholder="Nome Vertice Destino">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vertice">Peso Aresta</label>
+                                    <input [(ngModel)]="peso" name="vertice" type="text" class="form-control" id="grafo-origem" placeholder="Peso Aresta">
+                                </div>
+
+
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button (click)="adicionarAresta()" type="submit" class="btn btn-secondary">Adicionar</button>
+                                    <button type="submit" class="btn btn-secondary">Excluir</button>
+                                    <button type="submit" class="btn btn-secondary">Verificar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div *ngIf="verificadorVertice" class="alert alert-success" role="alert">
+                <strong>{{this.vertice.rotulo}}</strong> vertice faz parte do grafo
+            </div>
+        </div>
+    </div>
+</div>
