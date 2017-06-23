@@ -10,28 +10,33 @@ export class FordFulkerson {
 
     constructor(vertices: Array<Vertice>) {
         this.vertices = vertices;
-        this.caminho = new Caminho();
+
         this.verticeOrigem = this.pesquisaVerticeOrigem();
         this.verticeDestino = this.pesquisaVerticeDestino();
-        this.caminho.vertices.push(this.verticeOrigem);
+
         this.solucao = new Array();
-        
+
     }
 
 
 
 
     public executar() {
-        let proximoVertice: Vertice;
+        let cont = 0;
+        while (cont < 5) {
+            cont++;
+            this.caminho = new Caminho();
+            let proximoVertice: Vertice = undefined;
+            this.caminho.vertices.push(this.verticeOrigem);
+            proximoVertice = this.pesquisaCaminho(this.verticeOrigem);
+            while (this.caminho.vertices[this.caminho.vertices.length - 1] != this.verticeDestino) {
+                proximoVertice = this.pesquisaCaminho(proximoVertice);
 
-        proximoVertice = this.pesquisaCaminho(this.verticeOrigem);
-        while (this.caminho.vertices[this.caminho.vertices.length - 1] != this.verticeDestino) {
-            proximoVertice = this.pesquisaCaminho(proximoVertice);
-
+            }
+            this.reconstrutor();
+            this.imprimirVertices();
         }
 
-        this.reconstrutor();
-        this.imprimirVertices();
     }
 
     private reconstrutor() {
@@ -61,7 +66,7 @@ export class FordFulkerson {
         }
     }
 
-    private resultado(){
+    private resultado() {
         let resultado = this.solucao.reduce((acc, s) => {
             return acc + s
         }, 0)
