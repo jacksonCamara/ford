@@ -24,3 +24,33 @@
 13)Se não existir outro caminho o algoritmo deve parar
 
 14) Deve somar o array solucação e gerar o resultado
+
+
+
+
+
+
+
+            /* método somador
+                        if (this.caminho.vertices[i].arcos.length == 0) {
+                            let vertice = this.pesquisaVerticePorRotulo(this.caminho.vertices[i].rotulo)
+                            this.adicionarArco(vertice, menorPeso, this.caminho.vertices[i - 1].rotulo);
+                        } else {
+            
+            
+            
+            
+                            this.caminho.vertices[i].arcos.forEach(a => {
+                                console.log(this.caminho.vertices[i].rotulo)
+                                console.log(a.rotuloVerticeAdjacente)
+                                console.log(this.caminho.vertices[i-1].rotulo)
+                                if (a.rotuloVerticeAdjacente == this.caminho.vertices[i-1].rotulo) {
+                                    console.log('tem arco')
+                                } else {
+                                    console.log('não tem arco')
+                                }
+                            })
+                        }
+                        this.vertices.map(v => {
+                        })
+                        */

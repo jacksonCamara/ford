@@ -1,8 +1,11 @@
 import { Vertice } from './vertice.model'
+import { Arco } from './arco.model'
 
 export class FordFulkerson {
     private vertices: Array<Vertice>;
     private caminho: Caminho;
+    private verticeOrigem: Vertice;
+    private verticeDestino: Vertice;
 
     constructor(vertices: Array<Vertice>) {
         this.vertices = vertices;
@@ -18,41 +21,69 @@ export class FordFulkerson {
         // console.log(this.pesquisaVerticePorRotulo('b'));
         //console.log(this.pesquisaVerticeOrigem())
         //console.log(this.pesquisaVerticeDestino())
-        let verticeOrigem: Vertice = this.pesquisaVerticeOrigem();
-        let verticeDestino: Vertice = this.pesquisaVerticeDestino();
+        this.verticeOrigem = this.pesquisaVerticeOrigem();
+        this.verticeDestino = this.pesquisaVerticeDestino();
         let vertice = undefined;
         let continua = 0;
-        let proximoVertice
+        let proximoVertice;
 
-        this.caminho.vertices.push(verticeOrigem);
-        proximoVertice = this.pesquisaCaminho(verticeOrigem);
+        this.caminho.vertices.push(this.verticeOrigem);
+        proximoVertice = this.pesquisaCaminho(this.verticeOrigem);
         while (continua < 3) {
             continua++;
             proximoVertice = this.pesquisaCaminho(proximoVertice);
 
         }
-  
-      //  console.log(this.caminho)
-       // console.log(this.pesquisaMenorPeso())
-       this.reconstrutor();
-       this.imprimirVertices();
+
+        this.reconstrutor();
+        this.imprimirVertices();
     }
 
     private reconstrutor() {
-        this.subtrator();
+        let menorPeso = this.pesquisaMenorPeso();
+        this.subtrator(menorPeso);
+        this.somador(menorPeso);
     }
 
-    private subtrator(){
-        let menorPeso = this.pesquisaMenorPeso();
+    private subtrator(menorPeso: number) {
         this.vertices.map(v => {
             for (let i = 0; i < this.caminho.indiceArco.length; i++) {
                 if (v.rotulo == this.caminho.vertices[i].rotulo) {
                     v.arcos[this.caminho.indiceArco[i]].peso -= menorPeso;
                 }
             }
-
         })
     }
+
+    private somador(menorPeso: number) {
+        for (let i = this.caminho.indiceArco.length; i > 0; i--) {
+            let vertice = this.pesquisaVerticePorRotulo(this.caminho.vertices[i].rotulo)
+            if (!this.pesquisaArcoPorRotulo(this.caminho.vertices[i], this.caminho.vertices[i - 1].rotulo)) {
+                this.adicionarArco(vertice, menorPeso, this.caminho.vertices[i - 1].rotulo);
+            } else {
+                this.adicionarPesoArco(vertice, this.caminho.vertices[i - 1].rotulo, menorPeso)
+            }
+        }
+    }
+
+    private pesquisaArcoPorRotulo(vertice: Vertice, verticeRotuloAdjacente: string) {
+        return vertice.arcos.some(a =>
+            a.rotuloVerticeAdjacente == verticeRotuloAdjacente
+        )
+    }
+
+    private adicionarPesoArco(vertice: Vertice, verticeAdjacente, menorPeso: number){
+        vertice.arcos.map(a => {
+            if(a.rotuloVerticeAdjacente == verticeAdjacente){
+                a.peso += menorPeso;
+            }
+        })
+    }
+
+    private adicionarArco(vertice: Vertice, peso, verticeAdjacente) {
+        vertice.arcos.push(new Arco(verticeAdjacente, peso))
+    }
+
 
     private pesquisaMenorPeso() {
         let menorPeso = undefined;
@@ -65,7 +96,6 @@ export class FordFulkerson {
         }
         return menorPeso;
     }
-
 
 
     //Retorna o proximo vertice, salva o vertice e o indice do arco do proximo vertice no array caminho
@@ -87,14 +117,6 @@ export class FordFulkerson {
         return this.vertices.find(v =>
             v.rotulo == verticeRotulo
         )
-    }
-
-    //Retorna o proximo vertice
-    private pesquisaCaminho0(vertice: Vertice) {
-        let arco = vertice.arcos.find(a =>
-            a.peso > 0
-        )
-        return this.pesquisaVerticePorRotulo(arco.rotuloVerticeAdjacente);
     }
 
     private pesquisaVerticeOrigem(): Vertice {
@@ -147,20 +169,12 @@ export class FordFulkerson {
 
     }
 
-
-
-
-
     private imprimirVertices() {
         for (let i = 0; i < this.vertices.length; i++) {
-           // console.log(i);
             console.log(this.vertices[i])
         }
     }
-
-
 }
-
 
 class Caminho {
     public vertices: Array<Vertice> = new Array();

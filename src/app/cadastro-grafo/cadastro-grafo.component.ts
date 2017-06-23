@@ -166,6 +166,7 @@ export class CadastroGrafoComponent implements OnInit {
     this.grafo.vertices[1].arcos.push(new Arco("d", 8));
     //Arestas vertice B
     this.grafo.vertices[2].arcos.push(new Arco("t", 10));
+        this.grafo.vertices[2].arcos.push(new Arco("a", 5));
     //Arestas vertice C
     this.grafo.vertices[3].arcos.push(new Arco("d", 9));
 
