@@ -6,31 +6,26 @@ export class FordFulkerson {
     private caminho: Caminho;
     private verticeOrigem: Vertice;
     private verticeDestino: Vertice;
+    private solucao: Array<number>;
 
     constructor(vertices: Array<Vertice>) {
         this.vertices = vertices;
         this.caminho = new Caminho();
+        this.verticeOrigem = this.pesquisaVerticeOrigem();
+        this.verticeDestino = this.pesquisaVerticeDestino();
+        this.caminho.vertices.push(this.verticeOrigem);
+        this.solucao = new Array();
+        
     }
 
 
 
 
     public executar() {
-        //  this.imprimirVertices();
-        // this.pesquisaCaminho();
-        // console.log(this.pesquisaVerticePorRotulo('b'));
-        //console.log(this.pesquisaVerticeOrigem())
-        //console.log(this.pesquisaVerticeDestino())
-        this.verticeOrigem = this.pesquisaVerticeOrigem();
-        this.verticeDestino = this.pesquisaVerticeDestino();
-        let vertice = undefined;
-        let continua = 0;
-        let proximoVertice;
+        let proximoVertice: Vertice;
 
-        this.caminho.vertices.push(this.verticeOrigem);
         proximoVertice = this.pesquisaCaminho(this.verticeOrigem);
-        while (continua < 3) {
-            continua++;
+        while (this.caminho.vertices[this.caminho.vertices.length - 1] != this.verticeDestino) {
             proximoVertice = this.pesquisaCaminho(proximoVertice);
 
         }
@@ -66,15 +61,22 @@ export class FordFulkerson {
         }
     }
 
+    private resultado(){
+        let resultado = this.solucao.reduce((acc, s) => {
+            return acc + s
+        }, 0)
+        console.log(resultado)
+    }
+
     private pesquisaArcoPorRotulo(vertice: Vertice, verticeRotuloAdjacente: string) {
         return vertice.arcos.some(a =>
             a.rotuloVerticeAdjacente == verticeRotuloAdjacente
         )
     }
 
-    private adicionarPesoArco(vertice: Vertice, verticeAdjacente, menorPeso: number){
+    private adicionarPesoArco(vertice: Vertice, verticeAdjacente, menorPeso: number) {
         vertice.arcos.map(a => {
-            if(a.rotuloVerticeAdjacente == verticeAdjacente){
+            if (a.rotuloVerticeAdjacente == verticeAdjacente) {
                 a.peso += menorPeso;
             }
         })
