@@ -157,6 +157,43 @@ export class CadastroGrafoComponent implements OnInit {
     this.grafo.vertices.push(new Vertice());
     this.grafo.vertices[5].rotulo = "t";
     //Arestas vertice S - Origem
+    this.grafo.vertices[0].arcos.push(new Arco("a", 16));
+    this.grafo.vertices[0].arcos.push(new Arco("b", 13));
+
+    //Arestas vertice A
+    this.grafo.vertices[1].arcos.push(new Arco("b", 10));
+    this.grafo.vertices[1].arcos.push(new Arco("c", 12));
+
+    //Arestas vertice B
+    this.grafo.vertices[2].arcos.push(new Arco("a", 4));
+    this.grafo.vertices[2].arcos.push(new Arco("d", 14));
+
+    //Arestas vertice C
+    this.grafo.vertices[3].arcos.push(new Arco("b", 9));
+    this.grafo.vertices[3].arcos.push(new Arco("t", 20));
+
+    //Arestas vertice D
+    this.grafo.vertices[4].arcos.push(new Arco("c", 7));
+    this.grafo.vertices[4].arcos.push(new Arco("t", 4));
+    //Arestas vertice T
+
+  
+
+
+    /*
+    this.grafo.vertices.push(new Vertice());
+    this.grafo.vertices[0].rotulo = "s";
+    this.grafo.vertices.push(new Vertice());
+    this.grafo.vertices[1].rotulo = "a";
+    this.grafo.vertices.push(new Vertice());
+    this.grafo.vertices[2].rotulo = "b";
+    this.grafo.vertices.push(new Vertice());
+    this.grafo.vertices[3].rotulo = "c";
+    this.grafo.vertices.push(new Vertice());
+    this.grafo.vertices[4].rotulo = "d";
+    this.grafo.vertices.push(new Vertice());
+    this.grafo.vertices[5].rotulo = "t";
+    //Arestas vertice S - Origem
     this.grafo.vertices[0].arcos.push(new Arco("a", 10));
     this.grafo.vertices[0].arcos.push(new Arco("c", 10));
 
@@ -176,10 +213,6 @@ export class CadastroGrafoComponent implements OnInit {
     this.grafo.vertices[4].arcos.push(new Arco("t", 10));
     //Arestas vertice T
 
-  
-
-
-    /*
     
     
         this.grafo.vertices.push(new Vertice());

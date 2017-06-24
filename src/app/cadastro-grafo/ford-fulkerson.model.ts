@@ -7,6 +7,8 @@ export class FordFulkerson {
     private verticeOrigem: Vertice;
     private verticeDestino: Vertice;
     private solucao: Array<number>;
+    private cont: number = 0;
+
 
     constructor(vertices: Array<Vertice>) {
         this.vertices = vertices;
@@ -22,25 +24,68 @@ export class FordFulkerson {
 
 
     public executar() {
-        let cont = 0;
-        while (cont < 5) {
-            cont++;
+        let auxParada = false;
+        let qtdArcosOrigem = this.verticeOrigem.arcos.length + 1;
+        while (!auxParada) {
             this.caminho = new Caminho();
             let proximoVertice: Vertice = undefined;
             this.caminho.vertices.push(this.verticeOrigem);
             proximoVertice = this.pesquisaCaminho(this.verticeOrigem);
-            while (this.caminho.vertices[this.caminho.vertices.length - 1] != this.verticeDestino) {
+            //   console.log("Origem: " + this.verticeOrigem);
+            //  console.log("Destino: " + this.verticeDestino);
+            //  console.log("Destino: " + this.verticeDestino);
+
+            while ((this.caminho.vertices[this.caminho.vertices.length - 1] != this.verticeDestino) && !auxParada) {
                 proximoVertice = this.pesquisaCaminho(proximoVertice);
+                if (proximoVertice == this.verticeOrigem) {
+                    this.cont++;
+                }
+                if (this.cont == qtdArcosOrigem) {
+                    auxParada = true;
+                }
+                // console.log("contador = " + this.cont + " QTD Arcos = " + qtdArcosOrigem);
+            }
+            //  this.atualVertice = undefined;
+            this.cont = 0;
+            console.log("================================================================")
+            this.imprimirVertices();
+            console.log("================================================================")
+            this.resultado();
+            console.log("================================================================")
+            if (!auxParada) {
+                this.reconstrutor();
 
             }
-            this.reconstrutor();
-            this.imprimirVertices();
         }
+        // SOLUÇÃO
+        this.resultado();
+    }
 
+    //Retorna o proximo vertice, salva o vertice e o indice do arco do proximo vertice no array caminho
+    private pesquisaCaminho(vertice: Vertice) {
+        console.log("vertice")
+        console.log(vertice)
+        let proximoVertice: Vertice = vertice;
+
+        for (let i = 0; i < vertice.arcos.length; i++) {
+            if (vertice.arcos[i].peso > 0 && !this.verificaVerticeCaminho(vertice.arcos[i].rotuloVerticeAdjacente)) {
+                proximoVertice = this.pesquisaVerticePorRotulo(vertice.arcos[i].rotuloVerticeAdjacente);
+                this.caminho.indiceArco.push(i);
+                this.caminho.vertices.push(proximoVertice)
+                return proximoVertice;
+            }
+        }
+    }
+
+    private verificaVerticeCaminho(rotulo: string): boolean {
+        return this.caminho.vertices.some(s =>
+            s.rotulo == rotulo
+        )
     }
 
     private reconstrutor() {
         let menorPeso = this.pesquisaMenorPeso();
+        this.solucao.push(menorPeso);
         this.subtrator(menorPeso);
         this.somador(menorPeso);
     }
@@ -70,7 +115,10 @@ export class FordFulkerson {
         let resultado = this.solucao.reduce((acc, s) => {
             return acc + s
         }, 0)
-        console.log(resultado)
+        this.solucao.forEach(s => {
+            console.log(s);
+        })
+        console.log("Fluxo máximo: " + resultado);
     }
 
     private pesquisaArcoPorRotulo(vertice: Vertice, verticeRotuloAdjacente: string) {
@@ -105,18 +153,6 @@ export class FordFulkerson {
     }
 
 
-    //Retorna o proximo vertice, salva o vertice e o indice do arco do proximo vertice no array caminho
-    private pesquisaCaminho(vertice: Vertice) {
-        let proximoVertice: Vertice;
-        for (let i = 0; i < vertice.arcos.length; i++) {
-            if (vertice.arcos[i].peso > 0) {
-                proximoVertice = this.pesquisaVerticePorRotulo(vertice.arcos[i].rotuloVerticeAdjacente);
-                this.caminho.indiceArco.push(i);
-                this.caminho.vertices.push(proximoVertice)
-                return proximoVertice;
-            }
-        }
-    }
 
 
     //Pesquisa o vertice pelo rotulo no array vertices, se encontra retorna o vertice, se não encontrado retorna undefined
